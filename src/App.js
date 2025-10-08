@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai"; // Import from the correct package
 import "./App.css";
 
-const API_KEY = "AIzaSyDjtkJ9Cs82sodsyq6Ivc5DMjE3ZioS-IY"; // Replace with your actual API key
+const API_KEY = process.env.API_KEY;
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -18,12 +18,15 @@ function App() {
     if (!input.trim()) return;
 
     // Add user message
-    setMessages(prev => [...prev, { text: input, sender: "user" }]);
+    setMessages((prev) => [...prev, { text: input, sender: "user" }]);
     setInput("");
     setLoading(true);
 
     // Add placeholder bot message
-    setMessages(prev => [...prev, { text: "Thinking...", sender: "bot", isPlaceholder: true }]);
+    setMessages((prev) => [
+      ...prev,
+      { text: "Thinking...", sender: "bot", isPlaceholder: true },
+    ]);
 
     // Generation config
     const generationConfig = {
@@ -47,19 +50,25 @@ function App() {
         generationConfig,
       });
 
-      const botMessage = { text: response?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ No response", sender: "bot" };
+      const botMessage = {
+        text:
+          response?.candidates?.[0]?.content?.parts?.[0]?.text ||
+          "⚠️ No response",
+        sender: "bot",
+      };
 
-      setMessages(prev => {
+      setMessages((prev) => {
         const updated = [...prev];
-        const index = updated.findIndex(msg => msg.isPlaceholder);
+        const index = updated.findIndex((msg) => msg.isPlaceholder);
         if (index !== -1) updated[index] = botMessage;
         return updated;
       });
     } catch (err) {
-      setMessages(prev => {
+      setMessages((prev) => {
         const updated = [...prev];
-        const index = updated.findIndex(msg => msg.isPlaceholder);
-        if (index !== -1) updated[index] = { text: "⚠️ Error: " + err.message, sender: "bot" };
+        const index = updated.findIndex((msg) => msg.isPlaceholder);
+        if (index !== -1)
+          updated[index] = { text: "⚠️ Error: " + err.message, sender: "bot" };
         return updated;
       });
     } finally {
