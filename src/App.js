@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai"; // Import from the correct package
 import "./App.css";
 
-const API_KEY = process.env.API_KEY;
+console.log("Gemini API Key:", process.env.REACT_APP_API_KEY);
+
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function App() {
   const [messages, setMessages] = useState([]);
