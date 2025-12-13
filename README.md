@@ -8,10 +8,7 @@ Sandy GPT is an advanced AI-powered virtual assistant designed to provide smart 
 
 ## 🎬 Demo
 
-![Sandy GPT Demo](https://via.placeholder.com/800x400?text=Your+Demo+GIF+Here)
-
-Live Demo: [Click Here](https://your-demo-link.com)
-
+!This project is not hosted because of APY Key privacy Bit use can use this project add your api key and enjoy
 ---
 
 ## 🚀 Features
